@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能问答助手演示</title>
+    <!-- 引入聊天组件样式 -->
+    <link rel="stylesheet" href="chat-widget-2.css">
+    <style>
+        /* 测试页面样式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .test-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .chat-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .chat-btn:hover {
+            background-color: #218838;
+        }
+
+        /* 弹出窗口样式 */
+        .chat-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        .chat-popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 27%;
+            height: 60%;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            min-width: 400px;
+            min-height: 400px;
+            resize: both;
+        }
+        
+        /* 调整大小的边缘样式 */
+        .chat-popup {
+            /* 四个角 */
+            cursor: nwse-resize;
+        }
+        
+        .chat-popup::before {
+            /* 左右边缘 */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            cursor: ew-resize;
+            pointer-events: none;
+        }
+        
+        .chat-popup::after {
+            /* 上下边缘 */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: ns-resize;
+            pointer-events: none;
+        }
+
+        .chat-popup-header {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+        }
+
+        .chat-popup-header h3 {
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #555;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: #333;
+            background-color: #ddd;
+            border-radius: 50%;
+        }
+
+        .chat-popup-content {
+            height: calc(100% - 60px);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chat-widget-container-2 {
+            width: 100%;
+            height: 100%;
+            flex: 1;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>智能问答助手演示</h1>
+        <div class="input-group">
+            <label for="user-id-input">请输入用户ID:</label>
+            <input type="text" id="user-id-input" placeholder="user001" value="user001" maxlength="50">
+        </div>
+        <button class="chat-btn" id="open-chat-btn-2">智能问答助手</button>
+    </div>
+
+    <!-- 智能问答助手2弹出窗口 -->
+    <div class="chat-popup-overlay" id="chat-popup-overlay-2">
+        <div class="chat-popup">
+            <div class="chat-popup-header">
+                <h3>智能问答助手</h3>
+                <button class="close-btn" id="close-chat-btn-2">&times;</button>
+            </div>
+            <div class="chat-popup-content">
+                <!-- 聊天组件将渲染到这个容器中 -->
+                <div id="chat-widget-container-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入聊天组件脚本 -->
+    <script src="chat-widget-2.js"></script>
+
+    <script>
+        // 全局变量，用于存储聊天组件实例
+        let chatWidget2 = null;
+
+        // 页面加载完成后绑定事件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 智能问答助手2事件绑定
+            document.getElementById('open-chat-btn-2').addEventListener('click', openChatPopup2);
+            document.getElementById('close-chat-btn-2').addEventListener('click', closeChatPopup2);
+            document.getElementById('chat-popup-overlay-2').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeChatPopup2();
+                }
+            });
+            
+            // 添加弹窗拖动功能
+            const chatPopups = document.querySelectorAll('.chat-popup');
+            chatPopups.forEach(chatPopup => {
+                const chatPopupHeader = chatPopup.querySelector('.chat-popup-header');
+                let isDragging = false;
+                let startX, startY, startLeft, startTop;
+                
+                chatPopupHeader.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    // 获取初始位置
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startLeft = parseInt(window.getComputedStyle(chatPopup).left);
+                    startTop = parseInt(window.getComputedStyle(chatPopup).top);
+                    
+                    // 防止选择文本
+                    e.preventDefault();
+                });
+            });
+            
+            // 全局鼠标移动和释放事件（处理所有弹窗的拖动）
+            let currentDraggingPopup = null;
+            let startX, startY, startLeft, startTop;
+            
+            document.addEventListener('mousemove', function(e) {
+                if (!currentDraggingPopup) return;
+                
+                // 计算偏移量
+                const offsetX = e.clientX - startX;
+                const offsetY = e.clientY - startY;
+                
+                // 更新弹窗位置
+                currentDraggingPopup.style.left = (startLeft + offsetX) + 'px';
+                currentDraggingPopup.style.top = (startTop + offsetY) + 'px';
+            });
+            
+            document.addEventListener('mouseup', function() {
+                currentDraggingPopup = null;
+            });
+            
+            // 为所有弹窗头部添加mousedown事件
+            document.addEventListener('mousedown', function(e) {
+                const header = e.target.closest('.chat-popup-header');
+                if (header) {
+                    currentDraggingPopup = header.closest('.chat-popup');
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startLeft = parseInt(window.getComputedStyle(currentDraggingPopup).left);
+                    startTop = parseInt(window.getComputedStyle(currentDraggingPopup).top);
+                    e.preventDefault();
+                }
+            });
+        });
+
+        /**
+         * 打开智能问答助手2弹出窗口
+         */
+        function openChatPopup2() {
+            const userId = document.getElementById('user-id-input').value.trim();
+            
+            // 如果用户ID为空，使用默认值"user001"
+            const userToUse = userId || 'user001';
+            
+            // 显示弹出窗口
+            const overlay = document.getElementById('chat-popup-overlay-2');
+            const chatPopup = overlay.querySelector('.chat-popup');
+            
+            // 设置遮罩层显示方式为flex
+            overlay.style.display = 'flex';
+            
+            // 计算居中位置
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            const popupWidth = screenWidth * 0.6; // 原来的80%的2/3左右
+            const popupHeight = screenHeight * 0.8;
+            
+            // 设置弹窗位置和大小，避免使用transform
+            chatPopup.style.left = `${(screenWidth - popupWidth) / 2}px`;
+            chatPopup.style.top = `${(screenHeight - popupHeight) / 2}px`;
+            chatPopup.style.width = `${popupWidth}px`;
+            chatPopup.style.height = `${popupHeight}px`;
+            chatPopup.style.transform = 'none';
+            
+            // 初始化聊天组件2
+            initChatWidget2(userToUse);
+        }
+
+        /**
+         * 关闭智能问答助手2弹出窗口
+         */
+        function closeChatPopup2() {
+            // 隐藏弹出窗口
+            document.getElementById('chat-popup-overlay-2').style.display = 'none';
+            
+            // 销毁聊天组件实例
+            if (chatWidget2) {
+                chatWidget2.destroy();
+                chatWidget2 = null;
+            }
+        }
+
+        /**
+         * 初始化聊天组件2
+         * @param {string} userId - 用户ID
+         */
+        async function initChatWidget2(userId) {
+            try {
+                // 创建聊天组件2实例
+                chatWidget2 = new ChatWidget2({
+                    apiBase: 'http://39.99.179.142:8006',
+                    userId: userId,
+                    containerId: 'chat-widget-container-2'
+                });
+                
+                // 初始化组件
+                await chatWidget2.init();
+                
+                console.log('聊天组件2初始化成功，用户ID:', userId);
+            } catch (error) {
+                console.error('初始化聊天组件2失败:', error);
+                alert('初始化聊天组件2失败，请检查网络连接或API配置。');
+            }
+        }
+    </script>
+</body>
+</html>

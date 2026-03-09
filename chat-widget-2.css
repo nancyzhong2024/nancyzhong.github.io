@@ -1,0 +1,591 @@
+/* 智能问答助手2组件样式 */
+.chat-widget-2 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    background-color: #f5f7fa;
+}
+
+/* 已删除的头部样式 - 不再使用 */
+/* .chat-widget-2-header {
+    background-color: #4a90e2;
+    color: white;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #357abd;
+} */
+
+/* 模式切换容器 */
+.mode-switch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.mode-switch {
+    display: flex;
+    background-color: #e0e0e0;
+    border-radius: 25px;
+    padding: 4px;
+    min-width: 200px;
+}
+
+.mode-btn {
+    flex: 1;
+    padding: 4px 26px;
+    border: none;
+    border-radius: 20px;
+    background-color: transparent;
+    color: #666;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.mode-btn.active {
+    background-color: #4a90e2;
+    color: white;
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.4);
+}
+
+/* 基础模式容器 */
+.basic-mode-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    overflow: hidden;
+    display: none;
+}
+
+.basic-mode-container.active {
+    display: flex;
+}
+
+/* Tab容器 */
+.tab-container {
+    display: flex;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 8px 15px;
+    border: 1px solid #bbdefb;
+    background: linear-gradient(180deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #4a90e2;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid #4a90e2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.tab-btn:hover {
+    background: linear-gradient(180deg, #bbdefb 0%, #90caf9 100%);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.tab-btn.active {
+    color: white;
+    border-bottom-color: #4a90e2;
+    background: linear-gradient(180deg, #4a90e2 0%, #357abd 100%);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    z-index: 2;
+    border-top: 1px solid #357abd;
+    border-left: 1px solid #357abd;
+    border-right: 1px solid #357abd;
+}
+
+/* Tab内容区域 */
+.tab-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: none;
+}
+
+/* Tab提示词 */
+.tab-hint {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background-color: #f5f8ff;
+    border-left: 3px solid #4a90e2;
+    border-radius: 4px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* 快捷问题 */
+.quick-questions {
+    margin-bottom: 20px;
+}
+
+.quick-question-btn {
+    background-color: #f0f4f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 5px 15px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: #555;
+    transition: all 0.2s ease;
+}
+
+.quick-question-btn:hover {
+    background-color: #e0e8f0;
+    border-color: #4a90e2;
+    color: #4a90e2;
+}
+
+/* 问题输入区域 */
+.question-input-container {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.question-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 60px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.question-input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.submit-btn {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 0;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+}
+
+.submit-btn:hover {
+    background-color: #357abd;
+    box-shadow: 0 2px 8px rgba(74, 144, 226, 0.4);
+}
+
+/* 答案区域 */
+.answer-container {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    min-height: 100px;
+    margin-top: 20px;
+}
+
+.answer-title {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.answer-content {
+    color: #555;
+    line-height: 1.5;
+    font-size: 0.85rem;
+}
+
+/* 高级模式容器 */
+.advanced-mode-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    overflow: hidden;
+    display: none;
+    height: 100%; /* 明确高度 */
+    width: 100%; /* 明确宽度 */
+}
+
+.advanced-mode-container.active {
+    display: flex;
+}
+
+/* 高级模式布局 */
+.advanced-mode-container .app-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    min-height: 0; /* 允许flex子元素收缩 */
+    overflow: hidden; /* 防止溢出 */
+}
+
+/* 侧边栏 */
+.advanced-mode-container .sidebar {
+    width: 200px;
+    min-width: 200px; /* 固定最小宽度，防止过度压缩 */
+    background-color: #f0f0f0;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden; /* 防止溢出 */
+    flex-shrink: 0; /* 防止flexbox压缩侧边栏 */
+}
+
+.advanced-mode-container .sidebar h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.advanced-mode-container .new-chat-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    margin-bottom: 20px;
+    transition: background 0.2s;
+}
+
+.advanced-mode-container .new-chat-btn:hover {
+    background-color: #2980b9;
+}
+
+.advanced-mode-container .session-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px; /* 将间距缩小一半，与会话项高度保持协调 */
+    padding-right: 5px; /* 添加右侧内边距，避免滚动条覆盖文字 */
+    box-sizing: border-box;
+}
+
+.advanced-mode-container .session-item {
+    padding: 5px 12px; /* 调整内边距，适应缩小的高度 */
+    background-color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.9rem;
+    min-height: 20px; /* 将高度缩小一半 */
+    display: flex;
+    align-items: center;
+    color: #333;
+    flex-shrink: 0; /* 防止flex项被压缩 */
+    width: 100%; /* 确保flex项占据整个容器宽度 */
+    box-sizing: border-box; /* 确保内边距和边框包含在宽度内 */
+    border: 1px solid #ddd;
+}
+
+.advanced-mode-container .session-item:hover {
+    background-color: #f0f0f0;
+}
+
+.advanced-mode-container .session-item.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+/* 主内容区域 */
+.advanced-mode-container .main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    min-height: 0; /* 允许flex子元素收缩 */
+    height: 100%; /* 明确高度 */
+    overflow: hidden; /* 防止溢出 */
+}
+
+/* 高级模式聊天区域（复用原有样式） */
+.advanced-mode-container .chat-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.advanced-mode-container .chat-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.advanced-mode-container .user-info {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.advanced-mode-container .chat-container {
+    flex: 1;
+    overflow-y: scroll; /* 使用scroll确保滚动条始终可见 */
+    overflow-x: hidden;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 增加消息之间的间距，避免内容重叠 */
+    background-color: #f9f9f9;
+    min-height: 0;
+    height: auto; /* 让flexbox自动分配空间 */
+    -webkit-overflow-scrolling: touch; /* 移动设备上的平滑滚动 */
+}
+
+.advanced-mode-container .message {
+    padding: 12px 18px;
+    border-radius: 12px;
+    max-width: 75%;
+    line-height: 1.5;
+    word-wrap: break-word;
+    font-size: 0.85rem;
+}
+
+.advanced-mode-container .user-message {
+    background-color: #4a90e2;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+}
+
+.advanced-mode-container .agent-message {
+    background-color: #e9ecef;
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+}
+
+.advanced-mode-container .input-area {
+    padding: 16px 20px;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.advanced-mode-container .right-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.advanced-mode-container .input-container {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+}
+
+.advanced-mode-container .query-input {
+    flex: 1;
+    padding: 14px 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.2s ease;
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    resize: vertical;
+    min-height: 60px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+.advanced-mode-container .query-input:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.advanced-mode-container .send-btn {
+    padding: 6px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.advanced-mode-container .send-btn:hover {
+    background-color: #357abd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.advanced-mode-container .send-btn:disabled {
+    background-color: #d1d5db;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    opacity: 0.7;
+}
+
+/* 深度思考按钮 */
+.advanced-mode-container .deep-think-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    transition: all 0.3s;
+    user-select: none;
+    height: 36px;
+    width: 36px;
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.advanced-mode-container .deep-think-toggle.active {
+    background-color: #6c5ce7;
+    color: white;
+    border-color: #6c5ce7;
+}
+
+.advanced-mode-container .deep-think-icon {
+    font-size: 1.2rem;
+}
+
+.advanced-mode-container .deep-think-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* 推理框 */
+.advanced-mode-container .reasoning-box {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 4px 0;
+    overflow: visible;
+    font-size: 0.9rem;
+    min-height: auto; /* 移除固定的最小高度，让高度根据内容自动调整 */
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    max-width: 75%;
+    height: auto; /* 确保高度随内容变化 */
+}
+
+.advanced-mode-container .reasoning-summary {
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #6c5ce7;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #fff;
+    user-select: none;
+}
+
+.advanced-mode-container .reasoning-summary:hover {
+    background-color: #f0f0f0;
+}
+
+.advanced-mode-container .reasoning-content {
+    padding: 10px 12px;
+    border-top: 1px solid #e9ecef;
+    color: #555;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace;
+    white-space: pre-wrap;
+    /* 移除最大高度限制和滚动条，改为可完全展开/收起 */
+    max-height: none;
+    overflow-y: visible;
+    background-color: #fafafa;
+    font-size: 0.85rem;
+}
+
+.advanced-mode-container .reasoning-time {
+    font-size: 0.8rem;
+    color: #888;
+    margin-right: auto;
+}
+
+.advanced-mode-container .reasoning-toggle-icon {
+    font-size: 0.7rem;
+    color: #888;
+    margin-left: 5px;
+    transition: transform 0.2s ease;
+}
+
+/* 加载指示器 */
+.loading {
+    text-align: center;
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    display: none;
+}
+
+.loading.active {
+    display: block;
+}
